@@ -34,7 +34,7 @@ export const useAlphaVantageData = () => {
       params: {
         function: 'TIME_SERIES_DAILY',
         symbol: 'RELIANCE.BSE',
-        apikey: import.meta.env.VITE_ALPHAVANTAGE_API_KEY,
+        apikey: import.meta.env.VITE_ALPHAVANTAGE_API_KEY2,
       },
     }
   )
