@@ -25,7 +25,11 @@ type TimeSeriesDailyType = {
   'Time Series (Daily)': Record<string, AlphaVantagePriceDataType>
 }
 
-type AlphaVantageDataType = MetaDataWithKeyType & TimeSeriesDailyType
+type InformationType = { Information: string }
+
+type AlphaVantageDataType = MetaDataWithKeyType &
+  TimeSeriesDailyType &
+  InformationType
 
 export const useAlphaVantageData = () => {
   const { loading, err, data } = useAxios<AlphaVantageDataType>(
@@ -34,7 +38,7 @@ export const useAlphaVantageData = () => {
       params: {
         function: 'TIME_SERIES_DAILY',
         symbol: 'RELIANCE.BSE',
-        apikey: import.meta.env.VITE_ALPHAVANTAGE_API_KEY2,
+        apikey: import.meta.env.VITE_ALPHAVANTAGE_API_KEY,
       },
     }
   )
@@ -54,10 +58,14 @@ export const useAlphaVantageData = () => {
     '4. Output Size': loadingString,
     '5. Time Zone': loadingString,
   }
+
   const metaData = data?.['Meta Data'] || metaDataPlaceHolder
   const priceData = Object.entries(data?.['Time Series (Daily)'] || {})
   const today = priceData[0]?.[1] || singularDataPlaceHolder
   const yesterday = priceData[1]?.[1] || singularDataPlaceHolder
 
-  return { loading, err, data, metaData, priceData, today, yesterday }
+  const error =
+    err || (data?.Information && new Error(data?.Information)) || null
+
+  return { loading, err: error, data, metaData, priceData, today, yesterday }
 }

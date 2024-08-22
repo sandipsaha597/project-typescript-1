@@ -1,8 +1,7 @@
-import { AxiosError } from 'axios'
 import { ReactNode } from 'react'
 
 type AsyncDataDisplayPropsType = {
-  err: AxiosError | null
+  err: Error | null
   errComponent?: ReactNode
   children: ReactNode
 }
