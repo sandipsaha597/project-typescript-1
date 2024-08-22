@@ -38,7 +38,6 @@ export const useAlphaVantageData = () => {
       },
     }
   )
-  console.log(import.meta.env)
 
   const loadingString = 'loading...'
   const singularDataPlaceHolder: AlphaVantagePriceDataType = {
